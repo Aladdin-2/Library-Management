@@ -1,4 +1,4 @@
-                                                                                📚 Book and Client Management System
+                 📚 Book and Client Management System
 Project Description ✨
 This project is a Book and Client Management System developed using the Spring Framework. It offers functionalities like adding, updating, and deleting books, 
 as well as managing client information. The system uses Spring Boot for the backend, Spring Data JPA for database interactions, and MySQL for the relational database. 🚀
