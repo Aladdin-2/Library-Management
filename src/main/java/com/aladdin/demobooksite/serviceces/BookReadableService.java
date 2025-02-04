@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -27,37 +26,24 @@ public class BookReadableService {
     }
 
     public List<ResponseBookDto> getAllBook() {
-        List<ResponseBookDto> responseBookList = new ArrayList<>();
         List<Book> books = bookRepository.findAll();
-        if (books.isEmpty()) {
-            throw new ResourceNotFoundException("No book");
-        } else {
-            books.forEach(book -> {
-                responseBookList.add(modelMapper.map(book, ResponseBookDto.class));
-            });
-            return responseBookList;
+        if (!books.isEmpty()) {
+            return books.stream().map(book -> modelMapper.map(book, ResponseBookDto.class)).toList();
         }
+        throw new ResourceNotFoundException("No book");
 
     }
 
     public List<ResponseBookDto> getBookWithParam(String author, String title) {
         List<Book> foundBooks = bookRepository.findBookByAuthorAndTitle(author, title);
-
-        List<ResponseBookDto> responseBooks = new ArrayList<>();
-
-        if (foundBooks.isEmpty()) {
-            throw ResourceNotFoundException.of("There is no book with this name {0} and title {1} :", author, title);
-        } else {
-            foundBooks.forEach(book -> {
-                responseBooks.add(modelMapper.map(book, ResponseBookDto.class));
-            });
-            return responseBooks;
+        if (!foundBooks.isEmpty()) {
+            return foundBooks.stream().map(book -> modelMapper.map(book, ResponseBookDto.class)).toList();
         }
+        throw ResourceNotFoundException.of("There is no book with this name {0} and title {1} :", author, title);
     }
 
     public List<ResponseBookDto> sortByPriceDescendingAndIncreasing(String sortPriceBy) {
         List<Book> books = bookRepository.findAll();
-
         if (books.isEmpty()) {
             throw ResourceNotFoundException.of("There are no books in these settings! {0} ", sortPriceBy);
         }

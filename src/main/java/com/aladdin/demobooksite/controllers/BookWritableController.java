@@ -31,5 +31,4 @@ public class BookWritableController {
                                        @RequestParam(name = "price") double price) {
         bookWritableService.updateCustomBookSPrice(checkPrice, price);
     }
-
 }

@@ -1,12 +1,13 @@
 package com.aladdin.demobooksite.serviceces;
 
 import com.aladdin.demobooksite.dao.entity.Book;
+import com.aladdin.demobooksite.dao.entity.Client;
 import com.aladdin.demobooksite.dao.repository.BookRepository;
-import com.aladdin.demobooksite.model.dto.response.ResponseBookDto;
+import com.aladdin.demobooksite.dao.repository.ClientRepository;
 import com.aladdin.demobooksite.exceptions.ResourceNotFoundException;
+import com.aladdin.demobooksite.model.dto.response.ResponseBookDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,25 +20,22 @@ import java.io.File;
 public class BookWritableService {
 
     private final BookRepository bookRepository;
+    private final ClientRepository clientRepository;
     private final ModelMapper modelMapper;
     private final EmailService mailSender;
 
     public ResponseBookDto saveBook(Book book) {
-        ResponseBookDto responseBookDto = new ResponseBookDto();
-        BeanUtils.copyProperties(book, responseBookDto);
         bookRepository.save(book);
-
         String subject = "New information!";
         String text = "";
         FileSystemResource imageFile = new FileSystemResource(new File("C:/Users/Asus/Pictures/Success.png"));
-        mailSender.sendEmail("yusifovaaysen253@gmail.com", subject, text, imageFile);
+        mailSender.sendEmail("aladdin19.11.21@gmail.com", subject, text, imageFile);
 
-        return responseBookDto;
+        return modelMapper.map(book, ResponseBookDto.class);
     }
 
 
     @Transactional
-//    @SneakyThrows
     public ResponseBookDto updateBookQuantity(Integer id, int quantity, double price, boolean stock) {
         Book findingBook = bookRepository
                 .findById(id)
@@ -56,7 +54,6 @@ public class BookWritableService {
     @Transactional
     public void updateCustomBookSPrice(double checkPrice, double price) {
         int updateCount = bookRepository.updateCustomBooksPrice(checkPrice, price);
-
         if (updateCount == 0) {
             throw ResourceNotFoundException.of("There are no books in these settings! : {0}", checkPrice);
         }

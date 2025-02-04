@@ -8,11 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseClientDto {
-
-    Integer id;
-    String first_name;
-    String last_name;
-    String telephoneNumber;
-    int age;
-
+    private Integer id;
+    private String first_name;
+    private String last_name;
+    private String telephoneNumber;
+    private int age;
 }

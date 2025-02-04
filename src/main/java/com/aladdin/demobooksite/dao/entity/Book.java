@@ -40,10 +40,11 @@ public class Book {
     @Column(name = "in_stock", nullable = false)
     private boolean inStock;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
-
+*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
