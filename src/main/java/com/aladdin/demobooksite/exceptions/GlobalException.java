@@ -6,7 +6,4 @@ public class GlobalException extends RuntimeException {
         super(message);
     }
 
-    public GlobalException(String message, Throwable throwable) {
-    }
-
 }

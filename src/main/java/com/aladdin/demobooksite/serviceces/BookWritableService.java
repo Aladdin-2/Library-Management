@@ -1,9 +1,7 @@
 package com.aladdin.demobooksite.serviceces;
 
 import com.aladdin.demobooksite.dao.entity.Book;
-import com.aladdin.demobooksite.dao.entity.Client;
 import com.aladdin.demobooksite.dao.repository.BookRepository;
-import com.aladdin.demobooksite.dao.repository.ClientRepository;
 import com.aladdin.demobooksite.exceptions.ResourceNotFoundException;
 import com.aladdin.demobooksite.model.dto.response.ResponseBookDto;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +18,6 @@ import java.io.File;
 public class BookWritableService {
 
     private final BookRepository bookRepository;
-    private final ClientRepository clientRepository;
     private final ModelMapper modelMapper;
     private final EmailService mailSender;
 
